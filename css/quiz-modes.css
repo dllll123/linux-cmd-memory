@@ -43,6 +43,12 @@
   border: 2px solid var(--color-divider);
 }
 
+.flashcard-front__category {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
 .flashcard-front__command {
   font-family: var(--font-mono);
   font-size: 3rem;

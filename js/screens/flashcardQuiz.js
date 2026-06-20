@@ -19,6 +19,7 @@ function renderFlashcardQuizScreen(container, customCommands) {
     const progressPct = Math.round((currentIndex / totalQuestions) * 100);
 
     const frontHTML = `
+      <div class="flashcard-front__category">${cmd.categoryIcon} ${escapeHTML(cmd.category)}</div>
       <div class="flashcard-front__command">${escapeHTML(cmd.command)}</div>
       <div class="flashcard-front__hint">👆 点击翻转查看详情</div>
     `;

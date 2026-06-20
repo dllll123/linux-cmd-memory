@@ -90,6 +90,7 @@ function renderReviewScreen(container) {
 
   function renderFlashcardReview(cmd, progressBarHTML, typeLabel, modeLabel) {
     const frontHTML = `
+      <div class="flashcard-front__category">${cmd.categoryIcon} ${escapeHTML(cmd.category)}</div>
       <div class="flashcard-front__command">${escapeHTML(cmd.command)}</div>
       <div class="flashcard-front__hint">👆 点击翻转</div>
     `;
