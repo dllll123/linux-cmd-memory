@@ -1,0 +1,203 @@
+/* ===== App Layout ===== */
+#app {
+  width: 100%;
+  max-width: var(--max-content-width);
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header */
+.app-header {
+  height: var(--header-height);
+  min-height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-lg);
+  background: var(--color-card);
+  border-bottom: 1px solid var(--color-divider);
+  z-index: 10;
+}
+
+.app-header__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.app-header__back {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  color: var(--color-primary);
+  font-size: 0.95rem;
+}
+
+.app-header__action {
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  padding: 0 var(--space-sm);
+}
+
+/* Main screen container */
+#screen-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+#screen-container::-webkit-scrollbar {
+  width: 0;
+}
+
+/* Screen transitions */
+.screen {
+  min-height: 100%;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.screen.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  height: var(--navbar-height);
+  min-height: var(--navbar-height);
+  padding-bottom: var(--safe-bottom);
+  display: flex;
+  align-items: center;
+  background: var(--color-card);
+  border-top: 1px solid var(--color-divider);
+  z-index: 10;
+}
+
+.bottom-nav__tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+  gap: 2px;
+}
+
+.bottom-nav__tab.active {
+  color: var(--color-primary);
+}
+
+.bottom-nav__tab .icon {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.bottom-nav__tab .label {
+  font-size: 0.65rem;
+  font-weight: 500;
+}
+
+/* Card base */
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-lg);
+}
+
+/* Button base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: var(--radius-xl);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn--primary:active {
+  background: var(--color-primary-dark);
+}
+
+.btn--outline {
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text);
+  background: var(--color-card);
+}
+
+.btn--outline:active {
+  background: var(--color-bg);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn--lg {
+  padding: var(--space-md) var(--space-2xl);
+  font-size: 1rem;
+  border-radius: var(--radius);
+}
+
+/* Utility */
+.text-muted {
+  color: var(--color-text-secondary);
+}
+
+.text-sm {
+  font-size: 0.8rem;
+}
+
+.mt-sm {
+  margin-top: var(--space-sm);
+}
+
+.mt-md {
+  margin-top: var(--space-md);
+}
+
+.mt-lg {
+  margin-top: var(--space-lg);
+}
+
+.p-lg {
+  padding: var(--space-lg);
+}
+
+.text-center {
+  text-align: center;
+}

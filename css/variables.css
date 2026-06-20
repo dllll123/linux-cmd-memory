@@ -1,0 +1,68 @@
+/* ===== CSS Custom Properties ===== */
+:root {
+  /* Colors */
+  --color-primary: #1a73e8;
+  --color-primary-light: #e8f0fe;
+  --color-primary-dark: #1557b0;
+  --color-success: #0d904f;
+  --color-success-light: #e6f4ea;
+  --color-danger: #d93025;
+  --color-danger-light: #fce8e6;
+  --color-warning: #f9ab00;
+  --color-warning-light: #fef7e0;
+
+  /* Neutrals */
+  --color-bg: #f5f5f5;
+  --color-card: #ffffff;
+  --color-text: #202124;
+  --color-text-secondary: #5f6368;
+  --color-text-muted: #9aa0a6;
+  --color-border: #dadce0;
+  --color-divider: #e8eaed;
+
+  /* Category Colors */
+  --cat-file-dir: #1a73e8;
+  --cat-permission: #e37400;
+  --cat-remote: #0d904f;
+  --cat-compress: #c5221f;
+  --cat-network: #185abc;
+  --cat-monitor: #f9ab00;
+  --cat-process: #d93025;
+  --cat-view: #9334e6;
+  --cat-find: #188038;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
+  --space-3xl: 32px;
+
+  /* Borders & Shadows */
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 50%;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", "Fira Code", "Consolas", "Monaco", monospace;
+
+  /* Layout */
+  --navbar-height: 60px;
+  --header-height: 48px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --max-content-width: 480px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+}
