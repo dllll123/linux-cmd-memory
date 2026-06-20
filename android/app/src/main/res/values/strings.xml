@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Linux命令记忆</string>
+    <string name="title_activity_main">Linux命令记忆</string>
+    <string name="package_name">com.linuxcmd.memory</string>
+    <string name="custom_url_scheme">com.linuxcmd.memory</string>
+</resources>

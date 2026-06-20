@@ -2,7 +2,8 @@
 // Based on: 2.1 常用 Linux 命令.md + extended
 // 47 commands across 10 categories
 
-const COMMANDS = [
+// Use var so hot-update from CDN can replace these
+var COMMANDS = [
   // ==================== 一、文件与目录操作 ====================
   {
     id: "ls",
@@ -1339,7 +1340,7 @@ const COMMANDS = [
 ];
 
 // ===== Category metadata =====
-const CATEGORIES = [
+var CATEGORIES = [
   {
     id: "file-dir",
     name: "文件与目录操作",
@@ -1372,14 +1373,20 @@ const CATEGORIES = [
   },
 ];
 
-// ===== Build lookup maps =====
-const COMMANDS_BY_ID = {};
-const COMMANDS_BY_CATEGORY = {};
+// ===== Build lookup maps (rebuilt after hot-update) =====
+var COMMANDS_BY_ID = {};
+var COMMANDS_BY_CATEGORY = {};
 
-COMMANDS.forEach((cmd) => {
-  COMMANDS_BY_ID[cmd.id] = cmd;
-  if (!COMMANDS_BY_CATEGORY[cmd.categoryId]) {
-    COMMANDS_BY_CATEGORY[cmd.categoryId] = [];
-  }
-  COMMANDS_BY_CATEGORY[cmd.categoryId].push(cmd);
-});
+function buildLookups() {
+  COMMANDS_BY_ID = {};
+  COMMANDS_BY_CATEGORY = {};
+  COMMANDS.forEach((cmd) => {
+    COMMANDS_BY_ID[cmd.id] = cmd;
+    if (!COMMANDS_BY_CATEGORY[cmd.categoryId]) {
+      COMMANDS_BY_CATEGORY[cmd.categoryId] = [];
+    }
+    COMMANDS_BY_CATEGORY[cmd.categoryId].push(cmd);
+  });
+}
+
+buildLookups();

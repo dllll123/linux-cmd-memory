@@ -1,0 +1,28 @@
+{
+  "name": "xiaochengxu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sw.js",
+  "scripts": {
+    "build": "rm -rf www && mkdir -p www && cp index.html www/ && cp manifest.json www/ && cp sw.js www/ && cp .nojekyll www/ && cp -r css www/ && cp -r js www/",
+    "sync": "npm run build && npx cap sync",
+    "open": "npm run sync && npx cap open android"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dllll123/linux-cmd-memory.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dllll123/linux-cmd-memory/issues"
+  },
+  "homepage": "https://github.com/dllll123/linux-cmd-memory#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1"
+  }
+}

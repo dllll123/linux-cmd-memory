@@ -1,0 +1,14 @@
+{
+  "appId": "com.linuxcmd.memory",
+  "appName": "Linux命令记忆",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true,
+    "allowNavigation": ["cdn.jsdelivr.net"]
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}
