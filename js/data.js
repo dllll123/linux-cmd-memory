@@ -1,6 +1,6 @@
 // ===== Linux Commands Structured Data =====
-// Extracted from: 2.1 常用 Linux 命令.md
-// 31 commands across 9 categories
+// Based on: 2.1 常用 Linux 命令.md + extended
+// 47 commands across 10 categories
 
 const COMMANDS = [
   // ==================== 一、文件与目录操作 ====================
@@ -174,6 +174,36 @@ const COMMANDS = [
     difficulty: 1,
   },
 
+  {
+    id: "ln",
+    command: "ln",
+    fullName: "link",
+    category: "文件与目录操作",
+    categoryId: "file-dir",
+    categoryIcon: "📁",
+    description: "创建文件的硬链接或软链接（符号链接）",
+    commonOptions: [
+      { flag: "-s", meaning: "创建软链接（符号链接），类似 Windows 快捷方式" },
+      { flag: "-f", meaning: "强制覆盖已存在的链接" },
+    ],
+    examples: [
+      {
+        command: "ln -s /usr/local/nginx/conf /etc/nginx",
+        explanation: "创建软链接，将配置文件快捷引用到 /etc 下方便管理",
+      },
+    ],
+    scenarios: [
+      "你想在不同目录快速引用同一个文件而不复制",
+      "多版本管理时，用软链接指向当前激活的版本",
+    ],
+    acceptableAnswers: [
+      "ln -s source target",
+      "ln file link",
+      "ln -sf source target",
+    ],
+    difficulty: 3,
+  },
+
   // ==================== 二、权限管理 ====================
   {
     id: "chmod",
@@ -229,6 +259,35 @@ const COMMANDS = [
       "chown user file",
       "chown user:group file",
       "chown -R user dir",
+    ],
+    difficulty: 2,
+  },
+
+  {
+    id: "chgrp",
+    command: "chgrp",
+    fullName: "change group",
+    category: "权限管理",
+    categoryId: "permission",
+    categoryIcon: "🔐",
+    description: "修改文件或目录的所属组",
+    commonOptions: [
+      { flag: "-R", meaning: "递归修改目录及其下所有文件的所属组" },
+    ],
+    examples: [
+      {
+        command: "chgrp www-data /var/www/html",
+        explanation: "将网站目录的所属组改为 www-data，使 web 服务器组有访问权限",
+      },
+    ],
+    scenarios: [
+      "部署服务时需要把文件交给特定用户组管理",
+      "多人协作时，需要让同一组的成员都能访问某些文件",
+    ],
+    acceptableAnswers: [
+      "chgrp group file",
+      "chgrp -R group dir/",
+      "chgrp www-data /var/www",
     ],
     difficulty: 2,
   },
@@ -293,6 +352,38 @@ const COMMANDS = [
     difficulty: 2,
   },
 
+  {
+    id: "rsync",
+    command: "rsync",
+    fullName: "remote sync",
+    category: "远程连接与文件传输",
+    categoryId: "remote",
+    categoryIcon: "🌐",
+    description: "远程/本地文件同步工具，支持增量传输和断点续传，比 scp 更高效",
+    commonOptions: [
+      { flag: "-a", meaning: "归档模式，保留权限/时间等属性" },
+      { flag: "-v", meaning: "显示传输过程" },
+      { flag: "-z", meaning: "传输时压缩数据" },
+      { flag: "--delete", meaning: "删除目标目录中源没有的文件（完全同步）" },
+    ],
+    examples: [
+      {
+        command: "rsync -avz /local/test/ user@192.168.1.1:/backup/test/",
+        explanation: "将本地测试目录增量同步到远程备份服务器",
+      },
+    ],
+    scenarios: [
+      "你要把本地代码同步到服务器，只传修改过的文件",
+      "定期备份时需要镜像两个目录保持完全一致",
+    ],
+    acceptableAnswers: [
+      "rsync -avz src/ dest/",
+      "rsync -avz /local/ user@host:/remote/",
+      "rsync -avz --delete src/ dest/",
+    ],
+    difficulty: 3,
+  },
+
   // ==================== 四、压缩与解压 ====================
   {
     id: "tar",
@@ -355,6 +446,38 @@ const COMMANDS = [
     difficulty: 1,
   },
 
+  {
+    id: "gzip",
+    command: "gzip",
+    fullName: "gzip",
+    category: "压缩与解压",
+    categoryId: "compress",
+    categoryIcon: "📦",
+    description: "使用 GNU zip 算法压缩单个文件（生成 .gz 文件）",
+    commonOptions: [
+      { flag: "-k", meaning: "保留原始文件（默认会删除原文件）" },
+      { flag: "-d", meaning: "解压（等同于 gunzip）" },
+      { flag: "-r", meaning: "递归压缩目录下所有文件" },
+    ],
+    examples: [
+      {
+        command: "gzip access.log",
+        explanation: "压缩日志文件，生成 access.log.gz 以节省磁盘空间",
+      },
+    ],
+    scenarios: [
+      "一个大日志文件需要压缩归档但不打包（单文件压缩）",
+      "nginx 开启了 gzip 后会产生 .gz 文件，你需要解压查看",
+    ],
+    acceptableAnswers: [
+      "gzip file",
+      "gzip -d file.gz",
+      "gunzip file.gz",
+      "gzip -k file",
+    ],
+    difficulty: 2,
+  },
+
   // ==================== 五、网络请求 ====================
   {
     id: "curl",
@@ -414,6 +537,36 @@ const COMMANDS = [
       "wget -c http://example.com/largefile",
     ],
     difficulty: 2,
+  },
+
+  {
+    id: "ping",
+    command: "ping",
+    fullName: "ping",
+    category: "网络请求",
+    categoryId: "network",
+    categoryIcon: "📡",
+    description: "测试主机之间的网络连通性，发送 ICMP 请求并统计延迟和丢包率",
+    commonOptions: [
+      { flag: "-c", meaning: "指定发送包的次数（Linux 下默认无限发送）" },
+      { flag: "-i", meaning: "指定发包间隔（秒）" },
+    ],
+    examples: [
+      {
+        command: "ping -c 4 8.8.8.8",
+        explanation: "向 8.8.8.8 发送 4 个 ICMP 包，测试网络是否通",
+      },
+    ],
+    scenarios: [
+      "部署服务后想确认服务器网络是否可达",
+      "排查网络故障时先 ping 一下看看通不通",
+    ],
+    acceptableAnswers: [
+      "ping 192.168.1.1",
+      "ping -c 4 google.com",
+      "ping -c 4 8.8.8.8",
+    ],
+    difficulty: 1,
   },
 
   // ==================== 六、系统监控与资源查看 ====================
@@ -518,6 +671,62 @@ const COMMANDS = [
     difficulty: 2,
   },
 
+  {
+    id: "free",
+    command: "free",
+    fullName: "free",
+    category: "系统监控与资源查看",
+    categoryId: "monitor",
+    categoryIcon: "📊",
+    description: "查看系统内存（RAM）和交换空间（Swap）的使用情况",
+    commonOptions: [
+      { flag: "-h", meaning: "以人类可读格式显示（GB/MB）" },
+      { flag: "-m", meaning: "以 MB 为单位显示" },
+    ],
+    examples: [
+      {
+        command: "free -h",
+        explanation: "直观查看总内存、已用、空闲、缓存等数据",
+      },
+    ],
+    scenarios: [
+      "服务器运行变慢，你想看看是不是内存不够了",
+      "性能测试前确认可用内存是否充足",
+    ],
+    acceptableAnswers: ["free -h", "free -m", "free"],
+    difficulty: 1,
+  },
+  {
+    id: "lsof",
+    command: "lsof",
+    fullName: "list open files",
+    category: "系统监控与资源查看",
+    categoryId: "monitor",
+    categoryIcon: "📊",
+    description: "列出当前系统所有被进程打开的文件、网络连接等",
+    commonOptions: [
+      { flag: "-i", meaning: "列出网络连接（可指定端口，如 :80）" },
+      { flag: "-u", meaning: "列出指定用户打开的文件" },
+    ],
+    examples: [
+      {
+        command: "lsof -i :8080",
+        explanation: "查看哪个进程正在占用 8080 端口",
+      },
+    ],
+    scenarios: [
+      "启动服务时报端口被占用，你想找出是哪个进程占的",
+      "排查文件被哪个进程锁定导致无法删除",
+    ],
+    acceptableAnswers: [
+      "lsof -i :8080",
+      "lsof -i :80",
+      "lsof /path/to/file",
+      "lsof -u root",
+    ],
+    difficulty: 3,
+  },
+
   // ==================== 七、进程管理 ====================
   {
     id: "ps",
@@ -572,6 +781,70 @@ const COMMANDS = [
       "你想重启某个服务，需要先停止旧进程",
     ],
     acceptableAnswers: ["kill 12345", "kill -9 12345", "kill -15 5678"],
+    difficulty: 2,
+  },
+
+  {
+    id: "nohup",
+    command: "nohup",
+    fullName: "no hang up",
+    category: "进程管理",
+    categoryId: "process",
+    categoryIcon: "⚙️",
+    description: "让命令在后台运行且不受终端关闭影响（忽略 SIGHUP 信号）",
+    commonOptions: [
+      { meaning: "末尾加 & 符号让进程在后台运行", flag: "&（配合使用）" },
+    ],
+    examples: [
+      {
+        command: "nohup python test.py > output.log 2>&1 &",
+        explanation: "后台运行 Python 测试脚本，输出重定向到日志，关闭终端也不中断",
+      },
+    ],
+    scenarios: [
+      "你要在服务器上跑一个长时间测试，但不可能一直开着 SSH",
+      "想让进程在后台持续运行，即使断开 SSH 连接也不挂",
+    ],
+    acceptableAnswers: [
+      "nohup command &",
+      "nohup python test.py &",
+      "nohup ./script.sh > log 2>&1 &",
+    ],
+    difficulty: 2,
+  },
+  {
+    id: "systemctl",
+    command: "systemctl",
+    fullName: "system control",
+    category: "进程管理",
+    categoryId: "process",
+    categoryIcon: "⚙️",
+    description: "管理 systemd 系统服务（启动/停止/重启/查看状态/开机自启）",
+    commonOptions: [
+      { flag: "start", meaning: "启动服务" },
+      { flag: "stop", meaning: "停止服务" },
+      { flag: "restart", meaning: "重启服务" },
+      { flag: "status", meaning: "查看服务状态" },
+      { flag: "enable", meaning: "设置开机自启动" },
+      { flag: "disable", meaning: "关闭开机自启动" },
+    ],
+    examples: [
+      {
+        command: "systemctl restart nginx",
+        explanation: "重启 nginx 服务，配置修改后使其生效",
+      },
+    ],
+    scenarios: [
+      "修改了服务配置文件后需要重启服务",
+      "你想让某个服务开机自动启动",
+      "排查服务故障时先看看服务运行状态",
+    ],
+    acceptableAnswers: [
+      "systemctl status nginx",
+      "systemctl restart nginx",
+      "systemctl start docker",
+      "systemctl enable nginx",
+    ],
     difficulty: 2,
   },
 
@@ -767,6 +1040,99 @@ const COMMANDS = [
     difficulty: 2,
   },
 
+  {
+    id: "diff",
+    command: "diff",
+    fullName: "difference",
+    category: "目录创建与文件查看",
+    categoryId: "view",
+    categoryIcon: "📂",
+    description: "逐行对比两个文件的差异",
+    commonOptions: [
+      { flag: "-u", meaning: "以统一格式（unified diff）显示差异，更易读" },
+      { flag: "-r", meaning: "递归对比两个目录" },
+    ],
+    examples: [
+      {
+        command: "diff -u old.conf new.conf",
+        explanation: "对比修改前后的配置文件，检查变更了哪些行",
+      },
+    ],
+    scenarios: [
+      "修改了配置文件后想确认具体改了什么",
+      "对比两个版本的测试输出结果是否一致",
+    ],
+    acceptableAnswers: [
+      "diff file1 file2",
+      "diff -u old new",
+      "diff -r dir1 dir2",
+    ],
+    difficulty: 2,
+  },
+  {
+    id: "wc",
+    command: "wc",
+    fullName: "word count",
+    category: "目录创建与文件查看",
+    categoryId: "view",
+    categoryIcon: "📂",
+    description: "统计文件的行数、单词数、字符数",
+    commonOptions: [
+      { flag: "-l", meaning: "只统计行数" },
+      { flag: "-w", meaning: "只统计单词数" },
+      { flag: "-c", meaning: "只统计字节数" },
+    ],
+    examples: [
+      {
+        command: "wc -l access.log",
+        explanation: "统计日志文件共有多少行，评估日志量级",
+      },
+    ],
+    scenarios: [
+      "你想知道日志文件有多少行，评估数据量",
+      "统计代码目录下所有 .js 文件的总行数",
+    ],
+    acceptableAnswers: [
+      "wc -l file",
+      "wc file",
+      "wc -l access.log",
+      "wc -w file",
+    ],
+    difficulty: 1,
+  },
+  {
+    id: "sort",
+    command: "sort",
+    fullName: "sort",
+    category: "目录创建与文件查看",
+    categoryId: "view",
+    categoryIcon: "📂",
+    description: "对文件内容按行排序输出",
+    commonOptions: [
+      { flag: "-n", meaning: "按数值大小排序（而非字典序）" },
+      { flag: "-r", meaning: "逆序排列" },
+      { flag: "-u", meaning: "排序后去重" },
+      { flag: "-k", meaning: "按指定列排序" },
+    ],
+    examples: [
+      {
+        command: "sort -n -k2 score.txt",
+        explanation: "按第二列数值升序排列成绩数据",
+      },
+    ],
+    scenarios: [
+      "你想把日志按时间戳排序便于分析",
+      "统计后需要按访问量从高到低排列",
+    ],
+    acceptableAnswers: [
+      "sort file",
+      "sort -n file",
+      "sort -nr file",
+      "sort -u file",
+    ],
+    difficulty: 2,
+  },
+
   // ==================== 九、文件查找与命令定位 ====================
   {
     id: "find",
@@ -820,6 +1186,156 @@ const COMMANDS = [
     acceptableAnswers: ["which python3", "which java", "which node"],
     difficulty: 1,
   },
+  {
+    id: "locate",
+    command: "locate",
+    fullName: "locate",
+    category: "文件查找与命令定位",
+    categoryId: "find",
+    categoryIcon: "🔍",
+    description: "通过文件名数据库快速查找文件路径（比 find 快很多，依赖 updatedb 更新索引）",
+    commonOptions: [
+      { flag: "-i", meaning: "忽略大小写查找" },
+      { flag: "-r", meaning: "使用正则表达式匹配" },
+    ],
+    examples: [
+      {
+        command: "locate nginx.conf",
+        explanation: "瞬间找到系统中所有 nginx.conf 的位置",
+      },
+    ],
+    scenarios: [
+      "你知道文件名但不知道在哪个目录，想快速找到",
+      "查找某个程序的所有相关文件在系统中的分布",
+    ],
+    acceptableAnswers: [
+      "locate nginx.conf",
+      "locate -i filename",
+      "locate *.log",
+    ],
+    difficulty: 1,
+  },
+
+  // ==================== 十、文本处理 ====================
+  {
+    id: "awk",
+    command: "awk",
+    fullName: "awk",
+    category: "文本处理",
+    categoryId: "text-process",
+    categoryIcon: "✂️",
+    description: "强大的文本分析处理工具，按列提取、条件过滤、格式输出",
+    commonOptions: [
+      { flag: "-F", meaning: "指定字段分隔符" },
+      { meaning: '$1 $2 等为列引用', flag: '{print $N}' },
+    ],
+    examples: [
+      {
+        command: "awk '{print $1, $3}' access.log",
+        explanation: "提取日志中第 1 列和第 3 列（如 IP 和请求路径）",
+      },
+    ],
+    scenarios: [
+      "日志分析时只想提取某几列数据",
+      "需要对列数据做数值求和等计算",
+      "按条件过滤文本行并重新格式化输出",
+    ],
+    acceptableAnswers: [
+      "awk '{print $1}' file",
+      "awk -F: '{print $1}' /etc/passwd",
+      "awk '{sum+=$1} END{print sum}' file",
+    ],
+    difficulty: 3,
+  },
+  {
+    id: "sed",
+    command: "sed",
+    fullName: "stream editor",
+    category: "文本处理",
+    categoryId: "text-process",
+    categoryIcon: "✂️",
+    description: "流式文本编辑器，用于批量查找替换、删除、插入行等操作",
+    commonOptions: [
+      { flag: "-i", meaning: "直接修改文件（in-place，慎用）" },
+      { flag: "-e", meaning: "指定要执行的编辑命令" },
+      { meaning: "替换语法", flag: "'s/旧/新/g'" },
+    ],
+    examples: [
+      {
+        command: "sed -i 's/DEBUG/INFO/g' app.conf",
+        explanation: "批量将配置文件中所有 DEBUG 替换为 INFO",
+      },
+    ],
+    scenarios: [
+      "你需要批量替换几十个配置文件中的某个 URL",
+      "测试环境要临时删除日志文件中的某些敏感信息",
+    ],
+    acceptableAnswers: [
+      "sed 's/old/new/g' file",
+      "sed -i 's/a/b/' file",
+      "sed -n '10,20p' file",
+    ],
+    difficulty: 3,
+  },
+  {
+    id: "cut",
+    command: "cut",
+    fullName: "cut",
+    category: "文本处理",
+    categoryId: "text-process",
+    categoryIcon: "✂️",
+    description: "按字符位置或分隔符截取文本中的列",
+    commonOptions: [
+      { flag: "-d", meaning: "指定分隔符（默认 TAB）" },
+      { flag: "-f", meaning: "指定提取的字段编号" },
+      { flag: "-c", meaning: "按字符位置截取" },
+    ],
+    examples: [
+      {
+        command: "cut -d: -f1,3 /etc/passwd",
+        explanation: "提取 passwd 文件中第 1 和第 3 个冒号分隔的字段（用户名和 UID）",
+      },
+    ],
+    scenarios: [
+      "你只想看日志的某几列，不需要完整行",
+      "处理 CSV/TSV 格式数据时提取特定列",
+    ],
+    acceptableAnswers: [
+      "cut -d: -f1 file",
+      "cut -d',' -f1,3 data.csv",
+      "cut -c1-10 file",
+    ],
+    difficulty: 2,
+  },
+  {
+    id: "tr",
+    command: "tr",
+    fullName: "translate",
+    category: "文本处理",
+    categoryId: "text-process",
+    categoryIcon: "✂️",
+    description: "字符级转换或删除，如大小写转换、删除特定字符、压缩重复字符",
+    commonOptions: [
+      { flag: "-d", meaning: "删除指定字符" },
+      { flag: "-s", meaning: "压缩连续重复字符为一个" },
+    ],
+    examples: [
+      {
+        command: "cat log.txt | tr '[:upper:]' '[:lower:]'",
+        explanation: "将日志内容全转为小写，方便不区分大小写搜索",
+      },
+    ],
+    scenarios: [
+      "Windows 换行符 \\r\\n 转 Unix 格式 \\n",
+      "删除文本中多余的空白字符",
+    ],
+    acceptableAnswers: [
+      "tr 'a-z' 'A-Z' < file",
+      "tr -d '\r' < file",
+      "tr -s ' ' < file",
+    ],
+    difficulty: 2,
+  },
 ];
 
 // ===== Category metadata =====
@@ -828,26 +1344,32 @@ const CATEGORIES = [
     id: "file-dir",
     name: "文件与目录操作",
     icon: "📁",
-    commands: ["ls", "cd", "pwd", "cp", "mv", "rm", "touch"],
+    commands: ["ls", "cd", "pwd", "cp", "mv", "rm", "touch", "ln"],
   },
-  { id: "permission", name: "权限管理", icon: "🔐", commands: ["chmod", "chown"] },
-  { id: "remote", name: "远程连接与文件传输", icon: "🌐", commands: ["ssh", "scp"] },
-  { id: "compress", name: "压缩与解压", icon: "📦", commands: ["tar", "unzip"] },
-  { id: "network", name: "网络请求", icon: "📡", commands: ["curl", "wget"] },
+  { id: "permission", name: "权限管理", icon: "🔐", commands: ["chmod", "chown", "chgrp"] },
+  { id: "remote", name: "远程连接与文件传输", icon: "🌐", commands: ["ssh", "scp", "rsync"] },
+  { id: "compress", name: "压缩与解压", icon: "📦", commands: ["tar", "unzip", "gzip"] },
+  { id: "network", name: "网络请求与诊断", icon: "📡", commands: ["curl", "wget", "ping"] },
   {
     id: "monitor",
     name: "系统监控与资源查看",
     icon: "📊",
-    commands: ["top", "htop", "df", "du"],
+    commands: ["top", "htop", "df", "du", "free", "lsof"],
   },
-  { id: "process", name: "进程管理", icon: "⚙️", commands: ["ps", "kill"] },
+  { id: "process", name: "进程管理", icon: "⚙️", commands: ["ps", "kill", "nohup", "systemctl"] },
   {
     id: "view",
     name: "目录创建与文件查看",
     icon: "📂",
-    commands: ["mkdir", "cat", "more", "less", "grep", "head", "tail"],
+    commands: ["mkdir", "cat", "more", "less", "grep", "head", "tail", "diff", "wc", "sort"],
   },
-  { id: "find", name: "文件查找与命令定位", icon: "🔍", commands: ["find", "which"] },
+  { id: "find", name: "文件查找与命令定位", icon: "🔍", commands: ["find", "which", "locate"] },
+  {
+    id: "text-process",
+    name: "文本处理",
+    icon: "✂️",
+    commands: ["awk", "sed", "cut", "tr"],
+  },
 ];
 
 // ===== Build lookup maps =====
